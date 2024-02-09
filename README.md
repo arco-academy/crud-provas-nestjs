@@ -23,7 +23,7 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
-
+Desafio a ser implementado: https://app.eraser.io/workspace/D4bbvNKZF4BtFakT6T7K
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
