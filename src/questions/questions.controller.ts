@@ -9,32 +9,30 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateQuestionDTO } from './dto/create-questions.dto';
+import { QuestionService } from './questions.service';
 
 @Controller('questions')
 export class QuestionsController {
-  private questions: CreateQuestionDTO[];
-  constructor() {
-    this.questions = [];
-  }
+  constructor(private readonly questionService: QuestionService) {}
 
   @Post()
   async createQuestions(
     @Body() data: CreateQuestionDTO,
   ): Promise<CreateQuestionDTO> {
-    this.questions.push(data);
+    this.questionService.createQuestion(data);
     return data;
   }
 
   @Get()
   async getAllQuestions(): Promise<CreateQuestionDTO[]> {
-    return this.questions;
+    return this.questionService.listAllQuestions();
   }
 
   @Get(':id')
   async getQuestionById(
     @Param('id') id: string,
   ): Promise<CreateQuestionDTO | null> {
-    return this.questions.find((question) => question.id === id);
+    return this.questionService.searchQuestionById(id);
   }
 
   @Put(':id')
@@ -42,25 +40,13 @@ export class QuestionsController {
     @Param('id') id: string,
     @Body() question: CreateQuestionDTO,
   ): Promise<CreateQuestionDTO> {
-    const selectedQuestion = await this.getQuestionById(id);
-    if (!selectedQuestion) {
-      throw new NotFoundException();
-    }
-
-    this.questions = this.questions.map((q) => (q.id !== id ? q : question));
-    return question;
+    return this.questionService.updateQuestion(id, question);
   }
 
   @Delete(':id')
   async deleteFullQuestion(
     @Param('id') id: string,
   ): Promise<CreateQuestionDTO[]> {
-    const selectedQuestion = await this.getQuestionById(id);
-    if (!selectedQuestion) {
-      throw new NotFoundException();
-    }
-
-    this.questions = this.questions.filter((q) => q.id !== id);
-    return this.questions;
+    return this.questionService.deleteQuestion(id);
   }
 }
