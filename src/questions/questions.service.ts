@@ -28,24 +28,24 @@ export class QuestionService {
   }
 
   async searchQuestionById(id: string) {
-    return this.questions.find((question) => question.id === id);
+    const questionSearchResult = this.questions.find(
+      (question) => question.id === id,
+    );
+    if (questionSearchResult) {
+      return questionSearchResult;
+    } else {
+      throw new NotFoundException();
+    }
   }
 
   async updateQuestion(id: string, question: CreateQuestionDTO) {
-    const selectedQuestion = await this.searchQuestionById(id);
-    if (!selectedQuestion) {
-      throw new NotFoundException();
-    }
-
+    await this.searchQuestionById(id);
     this.questions = this.questions.map((q) => (q.id !== id ? q : question));
     return question;
   }
 
   async deleteQuestion(id: string) {
-    const selectedQuestion = await this.searchQuestionById(id);
-    if (!selectedQuestion) {
-      throw new NotFoundException();
-    }
+    await this.searchQuestionById(id);
     this.questions = this.questions.filter((q) => q.id !== id);
     return this.questions;
   }
