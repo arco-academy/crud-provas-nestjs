@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateQuestionDTO } from './dto/create-questions.dto';
-import { NotFoundException } from '@nestjs/common';
 @Injectable()
 export class QuestionService {
   private questions: CreateQuestionDTO[];
   constructor() {
     this.questions = [];
   }
+
   async listAllQuestions() {
     return this.questions;
   }
@@ -22,6 +22,7 @@ export class QuestionService {
     }
     return question;
   }
+
   async searchQuestionById(id: string) {
     return this.questions.find((question) => question.id === id);
   }
