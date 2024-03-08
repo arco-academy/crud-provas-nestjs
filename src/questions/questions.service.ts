@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateQuestionDTO } from './dto/create-questions.dto';
 @Injectable()
 export class QuestionService {
@@ -16,7 +20,7 @@ export class QuestionService {
       (q) => q.id === question.id,
     );
     if (existingQuestionIndex !== -1) {
-      this.questions[existingQuestionIndex] = question;
+      throw new BadRequestException('Id existente');
     } else {
       this.questions.push(question);
     }
