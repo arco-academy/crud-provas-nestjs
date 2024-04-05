@@ -11,11 +11,12 @@ export class QuestionService {
     this.questions = [];
   }
 
-  async listAllQuestions() {
+  async listAllQuestions(): Promise<CreateQuestionDTO[]> {
     return this.questions;
   }
 
   async createQuestion(question: CreateQuestionDTO) {
+    console.log('question', question);
     const existingQuestionIndex = this.questions.findIndex(
       (q) => q.id === question.id,
     );
