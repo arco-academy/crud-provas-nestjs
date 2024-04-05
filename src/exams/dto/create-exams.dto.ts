@@ -1,9 +1,26 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { CreateQuestionDTO } from 'src/questions/dto/create-questions.dto';
 
 export class CreateExamDTO {
+  @ApiProperty({
+    description: 'ID da atividade',
+    type: CreateExamDTO,
+  })
   id: string;
+  @ApiProperty({
+    description: 'Nome da atividade',
+    type: CreateExamDTO,
+  })
   name: string;
+  @ApiProperty({
+    description: 'Descrição da atividade',
+    type: CreateExamDTO,
+  })
   description: string;
+  @ApiProperty({
+    description: 'Lista de questões',
+    type: CreateExamDTO,
+  })
   questions: CreateQuestionDTO[];
 
   constructor(
