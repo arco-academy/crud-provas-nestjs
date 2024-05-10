@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateExamDTO } from './create-exams.dto';
+import { CreateExamDTO } from './dto/create-exams.dto';
 import { NotFoundException } from '@nestjs/common';
 @Injectable()
 export class ExamService {

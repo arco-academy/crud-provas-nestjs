@@ -8,13 +8,17 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateExamDTO } from './dto/create-exams.dto';
-import { ExamService } from './dto/exams.service';
+import { ExamService } from './exams.service';
 import { ApiTags } from '@nestjs/swagger';
+import { QuestionService } from '../questions/questions.service';
 
 @ApiTags('exams')
 @Controller('exams')
 export class ExamsController {
-  constructor(private readonly examService: ExamService) {}
+  constructor(
+    private readonly examService: ExamService,
+    private readonly questionService: QuestionService,
+  ) {}
 
   @Post()
   async createExam(@Body() data: CreateExamDTO): Promise<CreateExamDTO> {
