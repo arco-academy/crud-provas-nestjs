@@ -9,13 +9,7 @@ import {
 } from '@nestjs/common';
 import { CreateQuestionDTO } from './dto/create-questions.dto';
 import { QuestionService } from './questions.service';
-import {
-  ApiExtraModels,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 
 @ApiTags('questions')
 @Controller('questions')

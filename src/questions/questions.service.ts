@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateQuestionDTO } from './dto/create-questions.dto';
+import connection from 'src/database/connection';
 @Injectable()
 export class QuestionService {
   private questions: CreateQuestionDTO[];
@@ -16,15 +17,19 @@ export class QuestionService {
   }
 
   async createQuestion(question: CreateQuestionDTO) {
-    console.log('question', question);
-    const existingQuestionIndex = this.questions.findIndex(
-      (q) => q.id === question.id,
+    connection.run(
+      `INSERT INTO questions(examId, enunciated) VALUES (${question.examId}, "${question.enunciated}")`,
+      function (error) {
+        if (error) {
+          console.log(error);
+        }
+        const results = connection.get('SELECT * FROM questions WHERE id = ?', [
+          this.lastID,
+        ]);
+
+        return results;
+      },
     );
-    if (existingQuestionIndex !== -1) {
-      throw new BadRequestException('Id existente');
-    } else {
-      this.questions.push(question);
-    }
     return question;
   }
 
